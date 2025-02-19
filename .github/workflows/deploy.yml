@@ -3,29 +3,30 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main  # This will trigger the action when you push to the 'main' branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu virtual environment
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Check out the repository code
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2  # Set up Node.js (version 14 as specified)
         with:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  # Install project dependencies using npm
 
       - name: Build the project
-        run: npm run build
+        run: npm run build  # Build the project (creates the production-ready build in 'build' folder)
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3  # Action to deploy the build to GitHub Pages
         with:
-          publish_dir: ./build
+          publish_dir: ./build  # Specify the directory to publish (./build is where React outputs the built files)
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Required token for deployment
 
